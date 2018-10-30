@@ -11,9 +11,25 @@ public class Pub {
 
     public int computeCost(String drink, boolean student, int amount) {
 
-        if (amount > 2 && (drink == GT || drink == BACARDI_SPECIAL)) {
-            throw new RuntimeException("Too many drinks, max 2.");
+        verifyDrinksLimit(drink, amount);
+
+        int price = getPrice(drink);
+
+        if (student) {
+            price = getStudentDiscount(drink, price);
         }
+
+        return price*amount;
+    }
+
+    private int getStudentDiscount(String drink, int price) {
+        if (drink == ONE_CIDER || drink == ONE_BEER || drink == A_PROPER_CIDER) {
+            price = price - price/10;
+        }
+        return price;
+    }
+
+    private int getPrice(String drink) {
         int price;
         if (drink.equals(ONE_BEER)) {
             price = 74;
@@ -31,10 +47,13 @@ public class Pub {
         else {
             throw new RuntimeException("No such drink exists");
         }
-        if (student && (drink == ONE_CIDER || drink == ONE_BEER || drink == A_PROPER_CIDER)) {
-            price = price - price/10;
+        return price;
+    }
+
+    private void verifyDrinksLimit(String drink, int amount) {
+        if (amount > 2 && (drink == GT || drink == BACARDI_SPECIAL)) {
+            throw new RuntimeException("Too many drinks, max 2.");
         }
-        return price*amount;
     }
 
     //one unit of rum
