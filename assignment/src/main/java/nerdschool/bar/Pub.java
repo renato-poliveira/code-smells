@@ -1,5 +1,11 @@
 package nerdschool.bar;
 
+import nerdschool.bar.util.Ingredients;
+import nerdschool.model.Drink;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Pub {
 
 
@@ -8,6 +14,13 @@ public class Pub {
     public static final String A_PROPER_CIDER = "strongbow";
     public static final String GT = "gt";
     public static final String BACARDI_SPECIAL = "bacardi_special";
+
+    public List<Drink> drinkList;
+
+    public Pub() {
+        drinkList = new ArrayList<>();
+        drinkList.add(new Drink(74));
+    }
 
     public int computeCost(String drink, boolean student, int amount) {
 
@@ -19,12 +32,12 @@ public class Pub {
             price = getStudentDiscount(drink, price);
         }
 
-        return price*amount;
+        return price * amount;
     }
 
     private int getStudentDiscount(String drink, int price) {
         if (drink == ONE_CIDER || drink == ONE_BEER || drink == A_PROPER_CIDER) {
-            price = price - price/10;
+            price = price - price / 10;
         }
         return price;
     }
@@ -33,18 +46,14 @@ public class Pub {
         int price;
         if (drink.equals(ONE_BEER)) {
             price = 74;
-        }
-        else if (drink.equals(ONE_CIDER)) {
+        } else if (drink.equals(ONE_CIDER)) {
             price = 103;
-        }
-        else if (drink.equals(A_PROPER_CIDER)) price = 110;
+        } else if (drink.equals(A_PROPER_CIDER)) price = 110;
         else if (drink.equals(GT)) {
             price = ingredient6() + ingredient5() + ingredient4();
-        }
-        else if (drink.equals(BACARDI_SPECIAL)) {
-            price = ingredient6()/2 + ingredient1() + ingredient2() + ingredient3();
-        }
-        else {
+        } else if (drink.equals(BACARDI_SPECIAL)) {
+            price = ingredient6() / 2 + Ingredients.GIN.getPrice() + ingredient2() + ingredient3();
+        } else {
             throw new RuntimeException("No such drink exists");
         }
         return price;
@@ -70,7 +79,7 @@ public class Pub {
     private int ingredient3() {
         return 10;
     }
-    
+
     //one unit of green stuff
     private int ingredient4() {
         return 10;
