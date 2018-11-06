@@ -20,7 +20,7 @@ public class PubPricesTest {
     }
 
     @Test
-    public void oneBeerTest() {
+    public void oneBeerTest() throws Exception{
         int actualPrice = pub.computeCost(Pub.ONE_BEER, false, 1);
         assertEquals(74, actualPrice);
     }
@@ -78,11 +78,18 @@ public class PubPricesTest {
     @Test
     public void testStudentsGetDiscountsWhenOrderingMoreThanOneBeer() throws Exception {
         int actualPrice = pub.computeCost(Pub.ONE_BEER, true, 2);
-        assertEquals(67*2, actualPrice);
+        assertEquals(67 * 2, actualPrice);
     }
 
     @Test
     public void testCanOrderMoreThanTwoBeers() throws Exception {
         pub.computeCost(Pub.ONE_BEER, false, 5);
+    }
+
+    @Test
+    public void testeOrderBeerMoreThanInStock() throws Exception {
+        expectedException.expect(Exception.class);
+        expectedException.expectMessage("Ordered more drinks than there are in stock!");
+        pub.computeCost(Pub.ONE_BEER, false, 6);
     }
 }

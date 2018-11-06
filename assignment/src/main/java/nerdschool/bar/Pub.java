@@ -1,10 +1,9 @@
 package nerdschool.bar;
 
 import nerdschool.bar.util.Ingredients;
-import nerdschool.model.Drink;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Pub {
 
@@ -15,16 +14,26 @@ public class Pub {
     public static final String GT = "gt";
     public static final String BACARDI_SPECIAL = "bacardi_special";
 
-    public List<Drink> drinkList;
+    Map<String, Integer> drinkStock;
 
     public Pub() {
-        drinkList = new ArrayList<>();
-        drinkList.add(new Drink(74));
+        createDrinkStock();
     }
 
-    public int computeCost(String drink, boolean student, int amount) {
+    public void createDrinkStock() {
+        drinkStock = new HashMap();
+        drinkStock.put(ONE_BEER, 5);
+        drinkStock.put(ONE_CIDER, 5);
+        drinkStock.put(A_PROPER_CIDER, 5);
+        drinkStock.put(GT, 5);
+        drinkStock.put(BACARDI_SPECIAL, 5);
+
+    }
+
+    public int computeCost(String drink, boolean student, int amount) throws Exception {
 
         verifyDrinksLimit(drink, amount);
+        verifyDrinksInStock(drink, amount);
 
         int price = getPrice(drink);
 
@@ -63,6 +72,13 @@ public class Pub {
     private void verifyDrinksLimit(String drink, int amount) {
         if (amount > 2 && (drink == GT || drink == BACARDI_SPECIAL)) {
             throw new RuntimeException("Too many drinks, max 2.");
+        }
+    }
+
+    private void verifyDrinksInStock(String drink, int amount) throws Exception {
+        Integer quantityInStock = drinkStock.get(drink);
+        if (quantityInStock == null || amount > quantityInStock) {
+            throw new Exception("Ordered more drinks than there are in stock!");
         }
     }
 }
