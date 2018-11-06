@@ -50,9 +50,10 @@ public class Pub {
             price = 103;
         } else if (drink.equals(A_PROPER_CIDER)) price = 110;
         else if (drink.equals(GT)) {
-            price = ingredient6() + ingredient5() + ingredient4();
+            price = Ingredients.GIN.getPrice() + Ingredients.TONIC_WATER.getPrice() + Ingredients.GREEN_STUFF.getPrice();
         } else if (drink.equals(BACARDI_SPECIAL)) {
-            price = ingredient6() / 2 + Ingredients.GIN.getPrice() + ingredient2() + ingredient3();
+            price = Ingredients.GIN.getPrice() / 2 + Ingredients.RUN.getPrice()
+                    + Ingredients.GRENADINE.getPrice() + Ingredients.LIME_JUICE.getPrice();
         } else {
             throw new RuntimeException("No such drink exists");
         }
@@ -63,35 +64,5 @@ public class Pub {
         if (amount > 2 && (drink == GT || drink == BACARDI_SPECIAL)) {
             throw new RuntimeException("Too many drinks, max 2.");
         }
-    }
-
-    //one unit of rum
-    private int ingredient1() {
-        return 65;
-    }
-
-    //one unit of grenadine
-    private int ingredient2() {
-        return 10;
-    }
-
-    //one unit of lime juice
-    private int ingredient3() {
-        return 10;
-    }
-
-    //one unit of green stuff
-    private int ingredient4() {
-        return 10;
-    }
-
-    //one unit of tonic water
-    private int ingredient5() {
-        return 20;
-    }
-
-    //one unit of gin
-    private int ingredient6() {
-        return 85;
     }
 }
