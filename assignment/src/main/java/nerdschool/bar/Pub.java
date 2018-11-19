@@ -31,7 +31,6 @@ public class Pub {
     }
 
     public int computeCost(String drink, boolean student, int amount) throws Exception {
-
         verifyDrinksLimit(drink, amount);
         verifyDrinksInStock(drink, amount);
 
@@ -52,7 +51,7 @@ public class Pub {
     }
 
     private int getPrice(String drink) {
-        int price;
+        int price = 0;
         if (drink.equals(ONE_BEER)) {
             price = 74;
         } else if (drink.equals(ONE_CIDER)) {
@@ -63,8 +62,6 @@ public class Pub {
         } else if (drink.equals(BACARDI_SPECIAL)) {
             price = Ingredients.GIN.getPrice() / 2 + Ingredients.RUN.getPrice()
                     + Ingredients.GRENADINE.getPrice() + Ingredients.LIME_JUICE.getPrice();
-        } else {
-            throw new RuntimeException("No such drink exists");
         }
         return price;
     }
@@ -76,8 +73,11 @@ public class Pub {
     }
 
     private void verifyDrinksInStock(String drink, int amount) throws Exception {
+        if (!drinkStock.containsKey(drink)) {
+            throw new Exception("No such drink exists");
+        }
         Integer quantityInStock = drinkStock.get(drink);
-        if (quantityInStock == null || amount > quantityInStock) {
+        if (amount > quantityInStock) {
             throw new Exception("Ordered more drinks than there are in stock!");
         }
     }

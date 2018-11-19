@@ -51,7 +51,7 @@ public class PubPricesTest {
 
     @Test
     public void testThatADrinkNotInTheSortimentGivesError() throws Exception {
-        expectedException.expect(RuntimeException.class);
+        expectedException.expect(Exception.class);
         expectedException.expectMessage("No such drink");
         pub.computeCost("sanfranciscosling", false, 1);
     }
@@ -87,9 +87,11 @@ public class PubPricesTest {
     }
 
     @Test
-    public void testeOrderBeerMoreThanInStock() throws Exception {
+    public void testOrderBeerMoreThanInStock() throws Exception {
         expectedException.expect(Exception.class);
         expectedException.expectMessage("Ordered more drinks than there are in stock!");
         pub.computeCost(Pub.ONE_BEER, false, 6);
     }
+
+
 }
